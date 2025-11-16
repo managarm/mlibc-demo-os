@@ -4,7 +4,7 @@
 .align 4
 trap_handler:
     csrrw t6, sscratch, t6
-    addi t6, t6, 256
+    addi t6, t6, -256
 
     sd sp, 0(t6)
     mv sp, t6
@@ -39,7 +39,7 @@ trap_handler:
     sd tp, 224(sp)
     sd gp, 232(sp)
 
-    addi t6, t6, -256
+    addi t6, t6, 256
     csrrw t6, sscratch, t6
     sd t6, 240(sp)
 

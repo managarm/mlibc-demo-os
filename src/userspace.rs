@@ -58,6 +58,14 @@ pub fn init(root: &mut PageTable) -> ! {
     }
 }
 
+fn round_up(value: u64, round: u64) -> u64 {
+    value + (round - value % round)
+}
+
+fn round_down(value: u64, round: u64) -> u64 {
+    value - value % round
+}
+
 pub fn load_elf(root: &mut PageTable) -> u64 {
     let elf = ElfFile::new(USERSPACE_BINARY).unwrap();
     for phdr in elf
@@ -67,12 +75,15 @@ pub fn load_elf(root: &mut PageTable) -> u64 {
         debug!("Loading segment: {phdr}");
 
         let base = phdr.virtual_addr();
+        let mapping_base = round_down(base, 0x1000);
+        let mapping_top = round_up(base + phdr.mem_size(), 0x1000);
+
         let data = match phdr.get_data(&elf) {
             Ok(SegmentData::Undefined(data)) => data,
             _ => panic!("no segment data"),
         };
 
-        for virt in (base..base + phdr.mem_size()).step_by(0x1000) {
+        for virt in (mapping_base..mapping_top).step_by(0x1000) {
             root.map_page(virt, VALID | READ | WRITE);
         }
 
@@ -90,7 +101,7 @@ pub fn load_elf(root: &mut PageTable) -> u64 {
         }
 
         // Remap with the correct page flags
-        for virt in (base..base + phdr.mem_size()).step_by(0x1000) {
+        for virt in (mapping_base..mapping_top).step_by(0x1000) {
             root.map_page(virt, VALID | USER | prot);
         }
     }
