@@ -6,16 +6,16 @@ For pedagogical purposes we cut some corners. For example we do not implement a 
 
 Currently this kernel can run a statically linked hello world program. We plan to support a dynamically linked hello world in future.
 
-To build the kernel, first build the userpace application and then the kernel. It is done in this order because the kernel embeds the application inside itself.
+To build the userspace, switch to the user directory and run ``./make_user.sh``. This will build the toolchain, mlibc and the hello world program.
+
 ```
-# Build user application
-# This requires a built mlibc. By default, it is in "$HOME/mlibc", but you can change it by setting the "MLIBC_DIR=/path/to/mlibc" environment.
-$ ./user/make_user.sh
+# Build userland
+$ cd user
+$ ./make_user.sh
 # Build kernel
+$ cd ..
 $ cargo build
 ```
-
-TODO: How to build the userspace (including mlibc)
 
 ## Example output
 
