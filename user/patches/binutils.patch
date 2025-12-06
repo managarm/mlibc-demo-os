@@ -1,0 +1,11 @@
+--- binutils-2.45.1-patched/config.sub	2025-11-24 02:05:42.727152966 -0300
++++ binutils-2.45.1/config.sub	2025-11-24 02:06:47.577206764 -0300
+@@ -1992,6 +1992,7 @@
+ 	| cxux* \
+ 	| cygwin* \
+ 	| darwin* \
+# add ourselves to the list of recognized OSes
++	| demo* \
+ 	| dgux* \
+ 	| dicos* \
+ 	| dnix* \

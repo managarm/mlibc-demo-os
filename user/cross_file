@@ -1,0 +1,14 @@
+[host_machine]
+system = 'demo'
+cpu_family = 'riscv64'
+cpu = 'riscv64'
+endian = 'little'
+[binaries]
+c = 'riscv64-demo-gcc'
+cpp = 'riscv64-demo-g++'
+ar = 'riscv64-demo-ar'
+strip = 'riscv64-demo-strip'
+ld = 'riscv64-demo-ld'
+[built-in options]
+c_args = ['-march=rv64gc', '-mabi=lp64d']
+cpp_args = ['-march=rv64gc', '-mabi=lp64d']
